@@ -68,11 +68,12 @@ FROM customers
 ORDER BY FirstName, LastName, BirthYear;
 
 -- Задание 12
-SELECT Name, MIN(Milliseconds) / 1000 AS Seconds
+SELECT MIN(Milliseconds) / 1000 AS Seconds
 FROM tracks;
 
 -- Задание 13
--- Аналогично заданию 12
+SELECT Name, MIN(Milliseconds) / 1000 As Seconds
+FROM tracks;
 
 -- Задание 14
 SELECT Country, AVG(Age)
@@ -85,6 +86,6 @@ FROM employees
 WHERE STRFTIME('%m', HireDate) == '10';
 
 -- Задание 16
-SELECT LastName, MAX(DATE('now') - HireDate) AS HireAge
-FROM employees;
+SELECT LastName
+FROM employees ORDER BY HireDate LIMIT 1;
 
