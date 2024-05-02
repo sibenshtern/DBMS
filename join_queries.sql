@@ -34,10 +34,13 @@ FROM customers
 WHERE customers.FirstName != employees.FirstName
 ORDER BY customers.FirstName;
 
+-- Третье задание
+-- Запросы выдадут одинаковый ответ, насколько я понял, разницы между ними в этой случае нет
+
 -- Четвертое задание
 SELECT a.Title AS AlbumTitle, COUNT(t.TrackId) AS TracksCount
 FROM albums AS a
-         JOIN main.tracks t on a.AlbumId = t.AlbumId
+         JOIN tracks t on a.AlbumId = t.AlbumId
 GROUP BY AlbumTitle;
 
 SELECT a.Title as AlbumTitle, (SELECT COUNT(*) FROM tracks WHERE tracks.AlbumId = a.AlbumID) AS TracksCount
@@ -75,8 +78,7 @@ ORDER BY g.Name;
 -- Восьмое задание
 SELECT g.Name
 FROM genres g
-    JOIN tracks t on g.GenreId = t.GenreId
+         JOIN tracks t on g.GenreId = t.GenreId
 GROUP BY g.Name
 HAVING AVG(t.UnitPrice) > 1
 ORDER BY g.Name;
-
