@@ -58,11 +58,13 @@ WHERE ShipCity = 'Berlin'
 SELECT c.LastName, COUNT(c.CustomerId) AS SalesCount
 FROM customers c
          JOIN sales s on c.CustomerId = s.CustomerId
+WHERE SalesCount > 30
 GROUP BY c.CustomerId;
 
 SELECT c.LastName, (SELECT COUNT(s.SalesId) FROM sales s WHERE CustomerId = c.CustomerId) AS SalesCount
 FROM customers c
 ORDER BY c.CustomerId;
+HAVING SalesCount > 30
 
 -- Седьмое задание
 SELECT g.Name, (SELECT AVG(t.UnitPrice) FROM tracks t WHERE t.GenreId = g.GenreId) AS AveragePrice
