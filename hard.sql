@@ -49,9 +49,10 @@ GROUP BY user_id
 ORDER BY user_id DESC;
 
 -- d
-SELECT geo, SUM(win)
+SELECT geo, SUM(win) as winning
 FROM USER JOIN LOG L on USER.user_id = L.user_id
-GROUP BY geo;
+GROUP BY geo
+ORDER BY winning DESC
 
 -- e
 SELECT geo, MAX(bet) max_bet
