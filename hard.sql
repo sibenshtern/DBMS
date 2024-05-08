@@ -53,6 +53,20 @@ SELECT geo, SUM(win)
 FROM USER JOIN LOG L on USER.user_id = L.user_id
 GROUP BY geo;
 
+-- e
+SELECT geo, MAX(bet) max_bet
+FROM LOG
+         JOIN USER on USER.user_id = LOG.user_id
+WHERE bet != 0;
+
+SELECT geo, MAX(bet) max_bet
+FROM LOG
+         JOIN USER on USER.user_id = LOG.user_id
+WHERE bet != 0
+GROUP BY geo;
+-- Не совсем разобрался в вопросе. Поэтому первый запрос выводит город и максимальную ставку (вообще)
+-- Второй запрос выводит максимальную ставку в каждом городе
+
 -- f у меня не сработали STRFTIME и прочие функции. Я понимаю, что все, что мне осталось сделать, это вычесть две даты и взять условный AVG но у меня не получилось это сделать
 SELECT USER.user_id, first_bet_time, MIN(time)
 FROM USER
@@ -66,8 +80,7 @@ GROUP BY USER.user_id;
 
 -- Вот как должно было бы получится, но не уверен, что это выдает правильный ответ. Считает он среднее в днях
 SELECT AVG(CAST(STRFTIME('%s', first_bet_time) AS INT) -
-           CAST(STRFTIME('%s', min_time) AS INT)) / 60 / 60 /
-       24 AS days_before_bet
+           CAST(STRFTIME('%s', min_time) AS INT)) / 60 / 60 / 24 days_before_bet
 FROM (SELECT first_bet_time, MIN(time) AS min_time
       FROM USER
                JOIN (SELECT user_id, MIN(time) AS first_bet_time
@@ -75,5 +88,6 @@ FROM (SELECT first_bet_time, MIN(time) AS min_time
                      WHERE bet <> 0
                      GROUP BY user_id) AS first_bet
                     ON USER.user_id = first_bet.user_id
-               JOIN LOG ON USER.user_id = LOG.user_id)
+               JOIN LOG ON USER.user_id = LOG.user_id
+      GROUP BY LOG.user_id);
 
